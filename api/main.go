@@ -9,6 +9,7 @@ import (
 
 	"github.com/dhowden/tag"
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"golang.org/x/exp/slices"
 )
 
@@ -69,7 +70,7 @@ Params: None
 Returns: None
 */
 func indexSongs() {
-	var newMusicFiles []MediaFile
+	var newMediaFiles []MediaFile
 	var dirsToIndex = []string{MEDIA_DIR}
 
 	var dirsIndexSize = len(dirsToIndex)
@@ -89,7 +90,7 @@ func indexSongs() {
 				dirsToIndex = append(dirsToIndex, filePath)
 			} else {
 				if slices.Contains(supportedMediaTypes, fileType) {
-					newMusicFiles = append(newMusicFiles, newMediaFile(filePath))
+					newMediaFiles = append(newMediaFiles, newMediaFile(filePath))
 				}
 			}
 		}
@@ -97,11 +98,13 @@ func indexSongs() {
 		dirsIndexSize = len(dirsToIndex)
 	}
 
-	music = newMusicFiles
+	log.Println("Found", len(newMediaFiles), "files!")
+
+	music = newMediaFiles
 }
 
 type MediaFile struct {
-	id   int
+	id   string
 	path string
 
 	title string
@@ -124,8 +127,5 @@ func newMediaFile(filePath string) MediaFile {
 	if err != nil {
 		log.Fatal("Failed to read file metadata:", err)
 	}
-
-	var id = 0 // TODO: Generate a UUID for files
-
-	return MediaFile{id, filePath, m.Title()}
+	return MediaFile{uuid.New().String(), filePath, m.Title()}
 }
