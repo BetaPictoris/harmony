@@ -53,7 +53,7 @@ func main() {
 	})
 
 	// Start listening for requests
-	log.Println("Flagdown listening on http://127.0.0.1:3000")
+	log.Println("Harmony listening on http://127.0.0.1:3000")
 	app.Listen("127.0.0.1:3000")
 }
 
