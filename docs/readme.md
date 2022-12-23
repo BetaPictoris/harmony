@@ -1,3 +1,3 @@
-# <img src="../assets/png/Ico.png" alt="Harmony" width="32px"> Harmony
+# [<img src="../assets/png/IcoHeader.png" alt="Harmony" height="48px">](https://github.com/BetaPictoris/harmony-sh)
 
 Harmony is a no-fuss self-hosted music streaming site.
