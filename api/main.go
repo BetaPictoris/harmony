@@ -4,8 +4,10 @@ import (
 	"io/ioutil"
 	"log"
 	"mime"
+	"os"
 	"strings"
 
+	"github.com/dhowden/tag"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/exp/slices"
 )
@@ -57,6 +59,15 @@ func main() {
 	app.Listen("127.0.0.1:3000")
 }
 
+/*
+indexSongs
+Finds and reads metadata of files in the the MEDIA_DIR directory. It will ignore
+all files with an extension that doesn't have a MIME type that is found in
+supportedMediaTypes, and will store results in the global music dir.
+
+Params: None
+Returns: None
+*/
 func indexSongs() {
 	var newMusicFiles []MediaFile
 	var dirsToIndex = []string{MEDIA_DIR}
@@ -78,11 +89,7 @@ func indexSongs() {
 				dirsToIndex = append(dirsToIndex, filePath)
 			} else {
 				if slices.Contains(supportedMediaTypes, fileType) {
-					log.Println("Found song", filePath)
-
-					var fileData = MediaFile{len(newMusicFiles), filePath}
-
-					newMusicFiles = append(newMusicFiles, fileData)
+					newMusicFiles = append(newMusicFiles, newMediaFile(filePath))
 				}
 			}
 		}
@@ -96,4 +103,29 @@ func indexSongs() {
 type MediaFile struct {
 	id   int
 	path string
+
+	title string
+}
+
+/*
+newMediaFile
+Returns a new MediaFile object from a file path.
+
+filePath		string		The path of the file
+*/
+func newMediaFile(filePath string) MediaFile {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Println("Failed to read file:", err)
+	}
+
+	log.Println("Found song", filePath)
+	m, err := tag.ReadFrom(file)
+	if err != nil {
+		log.Fatal("Failed to read file metadata:", err)
+	}
+
+	var id = 0 // TODO: Generate a UUID for files
+
+	return MediaFile{id, filePath, m.Title()}
 }

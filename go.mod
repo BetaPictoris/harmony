@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/dhowden/tag v0.0.0-20220618230019-adf36e896086 // indirect
 	github.com/gofiber/fiber/v2 v2.40.1 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
