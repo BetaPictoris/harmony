@@ -86,7 +86,6 @@ func indexSongs() {
 			var fileType = mime.TypeByExtension("." + fileExt)
 
 			if f.IsDir() {
-				log.Println("Found new dir", filePath)
 				dirsToIndex = append(dirsToIndex, filePath)
 			} else {
 				if slices.Contains(supportedMediaTypes, fileType) {
@@ -122,10 +121,9 @@ func newMediaFile(filePath string) MediaFile {
 		log.Println("Failed to read file:", err)
 	}
 
-	log.Println("Found song", filePath)
 	m, err := tag.ReadFrom(file)
 	if err != nil {
-		log.Fatal("Failed to read file metadata:", err)
+		log.Println("Failed to read file metadata:", err)
 	}
 	return MediaFile{uuid.New().String(), filePath, m}
 }
