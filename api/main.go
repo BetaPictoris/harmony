@@ -107,7 +107,7 @@ type MediaFile struct {
 	id   string
 	path string
 
-	title string
+	metdata tag.Metadata
 }
 
 /*
@@ -127,5 +127,5 @@ func newMediaFile(filePath string) MediaFile {
 	if err != nil {
 		log.Fatal("Failed to read file metadata:", err)
 	}
-	return MediaFile{uuid.New().String(), filePath, m.Title()}
+	return MediaFile{uuid.New().String(), filePath, m}
 }
