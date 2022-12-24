@@ -15,6 +15,7 @@ import (
 
 var (
 	music               []MediaFile
+	albums              []Album
 	supportedMediaTypes = []string{"audio/mpeg", "audio/x-flac"}
 )
 
@@ -47,10 +48,10 @@ func main() {
 	})
 
 	/*
-		GET: /api/v1/music
+		GET: /api/v1/songs
 		Lists all music files
 	*/
-	v1api.Get("/music", func(c *fiber.Ctx) error {
+	v1api.Get("/songs", func(c *fiber.Ctx) error {
 		data := []BasicMediaFile{}
 
 		for i := 0; i < len(music); i++ {
@@ -59,6 +60,15 @@ func main() {
 
 		c.SendStatus(200)
 		return c.JSON(data)
+	})
+
+	/*
+		GET: /api/v1/albums
+		List all albums
+	*/
+	v1api.Get("/albums", func(c *fiber.Ctx) error {
+		c.SendStatus(200)
+		return c.JSON(albums)
 	})
 
 	// Start listening for requests
@@ -103,7 +113,7 @@ func indexSongs() {
 		dirsIndexSize = len(dirsToIndex)
 	}
 
-	log.Println("Found", len(newMediaFiles), "files!")
+	log.Println("Found", len(newMediaFiles), "files and", len(albums), "albums!")
 
 	music = newMediaFiles
 }
@@ -136,5 +146,67 @@ func newMediaFile(filePath string) MediaFile {
 	if err != nil {
 		log.Println("Failed to read file metadata:", err)
 	}
-	return MediaFile{uuid.New().String(), filePath, m}
+
+	media := MediaFile{uuid.NewString(), filePath, m}
+
+	albums = addToAlbumIfExists(albums, media.Metadata.Album(), media)
+	return media
+}
+
+type Album struct {
+	Id      string
+	Title   string
+	SongIDs []string
+}
+
+/*
+newAlbum
+Returns a new Album object from a title.
+
+title		string		The name of the album
+*/
+func newAlbum(title string) Album {
+	return Album{uuid.NewString(), title, []string{}}
+}
+
+/*
+addToAlbum
+Adds a MediaFile to an album, returns a new Album object.
+
+album		Album				The album object to add to.
+media		MediaFile	 	The file to add to the album.
+*/
+func addToAlbum(album Album, media MediaFile) Album {
+	a := album
+	a.SongIDs = append(album.SongIDs, media.Id)
+
+	return a
+}
+
+/*
+addToAlbumIfExists
+Adds a MediaFile to an album (and creates an Album if one is not found), returns a new []Album array.
+
+albums		  	[]Album			The array of albums to check.
+albumTitle		string			The title of the album to add to, or create.
+media					MediaFile		The MediaFile to add to it.
+*/
+func addToAlbumIfExists(albums []Album, albumTitle string, media MediaFile) []Album {
+	albumFound := false
+
+	for i := 0; i < len(albums); i++ {
+		if albums[i].Title == albumTitle {
+			albums[i] = addToAlbum(albums[i], media)
+			albumFound = true
+			break
+		}
+	}
+
+	if !albumFound {
+		a := newAlbum(albumTitle)
+		a = addToAlbum(a, media)
+		albums = append(albums, a)
+	}
+
+	return albums
 }
