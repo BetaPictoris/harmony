@@ -14,8 +14,10 @@ import (
 )
 
 var (
-	music               []MediaFile
-	albums              []Album
+	music   []MediaFile
+	albums  []Album
+	artists []Artist
+
 	supportedMediaTypes = []string{"audio/mpeg", "audio/x-flac"}
 )
 
@@ -106,8 +108,73 @@ func main() {
 		List all albums
 	*/
 	v1api.Get("/albums", func(c *fiber.Ctx) error {
+		data := []BasicAlbum{}
+
+		for i := 0; i < len(albums); i++ {
+			data = append(data, BasicAlbum{albums[i].Id, albums[i].Title})
+		}
+
 		c.SendStatus(200)
-		return c.JSON(albums)
+		return c.JSON(data)
+	})
+
+	/*
+		GET: /api/v1/albums/:ID
+		List details on an album
+	*/
+	v1api.Get("/albums/:ID", func(c *fiber.Ctx) error {
+		data := Album{}
+
+		for i := 0; i < len(albums); i++ {
+			if albums[i].Id == c.Params("ID") {
+				data = albums[i]
+				break
+			}
+		}
+
+		if data.Id == "" {
+			return c.SendStatus(404)
+		}
+
+		c.SendStatus(200)
+		return c.JSON(data)
+	})
+
+	/*
+		GET: /api/v1/artists
+		List all artists
+	*/
+	v1api.Get("/artists", func(c *fiber.Ctx) error {
+		data := []BasicArtist{}
+
+		for i := 0; i < len(artists); i++ {
+			data = append(data, BasicArtist{artists[i].Id, artists[i].Name})
+		}
+
+		c.SendStatus(200)
+		return c.JSON(data)
+	})
+
+	/*
+		GET: /api/v1/artists/:ID
+		List the details of a specific artist
+	*/
+	v1api.Get("/artists/:ID", func(c *fiber.Ctx) error {
+		data := Artist{}
+
+		for i := 0; i < len(artists); i++ {
+			if artists[i].Id == c.Params("ID") {
+				data = artists[i]
+				break
+			}
+		}
+
+		if data.Id == "" {
+			return c.SendStatus(404)
+		}
+
+		c.SendStatus(200)
+		return c.JSON(data)
 	})
 
 	// Start listening for requests
@@ -152,7 +219,7 @@ func indexSongs() {
 		dirsIndexSize = len(dirsToIndex)
 	}
 
-	log.Println("Found", len(newMediaFiles), "files and", len(albums), "albums!")
+	log.Println("Found", len(newMediaFiles), "files,", len(albums), "albums, and", len(artists), "artists!")
 
 	music = newMediaFiles
 }
@@ -189,13 +256,21 @@ func newMediaFile(filePath string) MediaFile {
 	media := MediaFile{uuid.NewString(), filePath, m}
 
 	albums = addToAlbumIfExists(albums, media)
+	artists = addToArtistIfExists(artists, albums[len(albums)-1])
 	return media
 }
 
 type Album struct {
-	Id      string
-	Title   string
+	Id         string
+	Title      string
+	ArtistName string
+
 	SongIDs []string
+}
+
+type BasicAlbum struct {
+	Id    string
+	Title string
 }
 
 /*
@@ -204,8 +279,8 @@ Returns a new Album object from a title.
 
 title		string		The name of the album
 */
-func newAlbum(title string) Album {
-	return Album{uuid.NewString(), title, []string{}}
+func newAlbum(title string, artistName string) Album {
+	return Album{uuid.NewString(), title, artistName, []string{}}
 }
 
 /*
@@ -224,7 +299,8 @@ func addToAlbum(album Album, media MediaFile) Album {
 
 /*
 addToAlbumIfExists
-Adds a MediaFile to an album (and creates an Album if one is not found), returns a new []Album array.
+Adds a MediaFile to an album (and creates an Album if one is not found),
+returns a new []Album array.
 
 albums		  	[]Album			The array of albums to check.
 media					MediaFile		The MediaFile to add to it.
@@ -241,10 +317,74 @@ func addToAlbumIfExists(albums []Album, media MediaFile) []Album {
 	}
 
 	if !albumFound {
-		a := newAlbum(media.Metadata.Album())
+		a := newAlbum(media.Metadata.Album(), media.Metadata.AlbumArtist())
 		a = addToAlbum(a, media)
 		albums = append(albums, a)
 	}
 
 	return albums
+}
+
+type Artist struct {
+	Id   string
+	Name string
+
+	AlbumIDs []string
+}
+
+type BasicArtist struct {
+	Id   string
+	Name string
+}
+
+/*
+newArtist
+Creates a new Artist object.
+
+name		String		The artist's name.
+*/
+func newArtist(name string) Artist {
+	return Artist{uuid.NewString(), name, []string{}}
+}
+
+/*
+addToArtist
+Adds an Album to an artist, returns a new Artist object.
+
+artist		Artist				The album object to add to.
+album 		Album     	 	The file to add to the album.
+*/
+func addToArtist(artist Artist, album Album) Artist {
+	a := artist
+	a.AlbumIDs = append(album.SongIDs, album.Id)
+
+	return a
+}
+
+/*
+addToArtistIfExists
+Adds an Album to an artist (and creates an Artist if one is not found),
+return a new []Artist array.
+
+artists			[]Artist	The array of artists to check.
+album				Album			The album to add.
+*/
+func addToArtistIfExists(artists []Artist, album Album) []Artist {
+	artistFound := false
+
+	for i := 0; i < len(artists); i++ {
+		if artists[i].Name == album.ArtistName {
+			artists[i] = addToArtist(artists[i], album)
+			artistFound = true
+			break
+		}
+	}
+
+	if !artistFound {
+		a := newArtist(album.ArtistName)
+		a = addToArtist(a, album)
+		artists = append(artists, a)
+	}
+
+	return artists
 }
