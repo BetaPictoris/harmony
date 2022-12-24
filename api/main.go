@@ -51,8 +51,14 @@ func main() {
 		Lists all music files
 	*/
 	v1api.Get("/music", func(c *fiber.Ctx) error {
+		data := []BasicMediaFile{}
+
+		for i := 0; i < len(music); i++ {
+			data = append(data, BasicMediaFile{music[i].Id, music[i].Metadata.Title()})
+		}
+
 		c.SendStatus(200)
-		return c.JSON(music)
+		return c.JSON(data)
 	})
 
 	// Start listening for requests
@@ -103,10 +109,15 @@ func indexSongs() {
 }
 
 type MediaFile struct {
-	id   string
-	path string
+	Id   string
+	Path string
 
-	metdata tag.Metadata
+	Metadata tag.Metadata
+}
+
+type BasicMediaFile struct {
+	Id    string
+	Title string
 }
 
 /*
