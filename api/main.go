@@ -63,6 +63,24 @@ func main() {
 	})
 
 	/*
+		GET: /api/v1/song/:ID
+		Returns a file of an audio file with :ID
+	*/
+	v1api.Get("/songs/:ID", func(c *fiber.Ctx) error {
+		var filePath string
+
+		for i := 0; i < len(music); i++ {
+			if music[i].Id == c.Params("ID") {
+				filePath = music[i].Path
+				break
+			}
+		}
+
+		c.SendStatus(200)
+		return c.SendFile(filePath)
+	})
+
+	/*
 		GET: /api/v1/albums
 		List all albums
 	*/
