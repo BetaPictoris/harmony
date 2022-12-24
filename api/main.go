@@ -64,9 +64,30 @@ func main() {
 
 	/*
 		GET: /api/v1/song/:ID
-		Returns a file of an audio file with :ID
+		Returns the data on a file with :ID
 	*/
 	v1api.Get("/songs/:ID", func(c *fiber.Ctx) error {
+		data := MediaFile{}
+
+		for i := 0; i < len(music); i++ {
+			if music[i].Id == c.Params("ID") {
+				data = music[i]
+				break
+			}
+		}
+
+		if (data == MediaFile{}) {
+			return c.SendStatus(404)
+		}
+		c.SendStatus(200)
+		return c.JSON(data)
+	})
+
+	/*
+		GET: /api/v1/song/:ID/audio
+		Returns a file of an audio file with :ID
+	*/
+	v1api.Get("/songs/:ID/audio", func(c *fiber.Ctx) error {
 		var filePath string
 
 		for i := 0; i < len(music); i++ {
