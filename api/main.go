@@ -28,7 +28,7 @@ const (
 func main() {
 	log.Println("Starting Harmony...")
 
-	log.Print("Indexing songs...")
+	// Update local song index in the background.
 	go indexSongs()
 
 	app := fiber.New(fiber.Config{
@@ -47,6 +47,15 @@ func main() {
 	v1api.Get("/ping", func(c *fiber.Ctx) error {
 		c.SendStatus(200)
 		return c.SendString("Pong!")
+	})
+
+	/*
+	   GET: /api/v1/index/update
+	   Updates the song index.
+	*/
+	v1api.Get("/index/update", func(c *fiber.Ctx) error {
+		go indexSongs()
+		return c.SendStatus(202)
 	})
 
 	/*
@@ -111,7 +120,7 @@ func main() {
 		data := []BasicAlbum{}
 
 		for i := 0; i < len(albums); i++ {
-			data = append(data, BasicAlbum{albums[i].Id, albums[i].Title})
+			data = append(data, BasicAlbum{albums[i].Id, albums[i].Title, albums[i].ArtistName})
 		}
 
 		c.SendStatus(200)
@@ -192,6 +201,7 @@ Params: None
 Returns: None
 */
 func indexSongs() {
+	log.Println("[INDEX] Updating song index...")
 	var newMediaFiles []MediaFile
 	var dirsToIndex = []string{MEDIA_DIR}
 
@@ -219,7 +229,7 @@ func indexSongs() {
 		dirsIndexSize = len(dirsToIndex)
 	}
 
-	log.Println("Found", len(newMediaFiles), "songs,", len(albums), "albums, and", len(artists), "artists!")
+	log.Println("[INDEX] Found", len(newMediaFiles), "songs,", len(albums), "albums, and", len(artists), "artists!")
 
 	music = newMediaFiles
 }
@@ -256,7 +266,11 @@ func newMediaFile(filePath string) MediaFile {
 	media := MediaFile{uuid.NewString(), filePath, m}
 
 	albums = addToAlbumIfExists(albums, media)
-	artists = addToArtistIfExists(artists, albums[len(albums)-1])
+	newArtists, albumWithID := addToArtistIfExists(artists, albums[len(albums)-1])
+
+	albums[len(albums)-1].ArtistID = albumWithID.ArtistID
+	artists = newArtists
+
 	return media
 }
 
@@ -264,13 +278,15 @@ type Album struct {
 	Id         string
 	Title      string
 	ArtistName string
+	ArtistID   string
 
 	SongIDs []string
 }
 
 type BasicAlbum struct {
-	Id    string
-	Title string
+	Id       string
+	Title    string
+	ArtistID string
 }
 
 /*
@@ -280,7 +296,7 @@ Returns a new Album object from a title.
 title		string		The name of the album
 */
 func newAlbum(title string, artistName string) Album {
-	return Album{uuid.NewString(), title, artistName, []string{}}
+	return Album{uuid.NewString(), title, artistName, "", []string{}}
 }
 
 /*
@@ -349,16 +365,16 @@ func newArtist(name string) Artist {
 
 /*
 addToArtist
-Adds an Album to an artist, returns a new Artist object.
+Adds an Album to an artist, returns a new Artist and Album object.
 
 artist		Artist				The album object to add to.
 album 		Album     	 	The file to add to the album.
 */
-func addToArtist(artist Artist, album Album) Artist {
-	a := artist
-	a.AlbumIDs = append(album.SongIDs, album.Id)
+func addToArtist(artist Artist, album Album) (Artist, Album) {
+	artist.AlbumIDs = append(artist.AlbumIDs, album.Id)
+	album.ArtistID = artist.Id
 
-	return a
+	return artist, album
 }
 
 /*
@@ -369,12 +385,12 @@ return a new []Artist array.
 artists			[]Artist	The array of artists to check.
 album				Album			The album to add.
 */
-func addToArtistIfExists(artists []Artist, album Album) []Artist {
+func addToArtistIfExists(artists []Artist, album Album) ([]Artist, Album) {
 	artistFound := false
 
 	for i := 0; i < len(artists); i++ {
 		if artists[i].Name == album.ArtistName {
-			artists[i] = addToArtist(artists[i], album)
+			artists[i], album = addToArtist(artists[i], album)
 			artistFound = true
 			break
 		}
@@ -382,9 +398,9 @@ func addToArtistIfExists(artists []Artist, album Album) []Artist {
 
 	if !artistFound {
 		a := newArtist(album.ArtistName)
-		a = addToArtist(a, album)
+		a, album = addToArtist(a, album)
 		artists = append(artists, a)
 	}
 
-	return artists
+	return artists, album
 }
