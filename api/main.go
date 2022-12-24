@@ -219,7 +219,7 @@ func indexSongs() {
 		dirsIndexSize = len(dirsToIndex)
 	}
 
-	log.Println("Found", len(newMediaFiles), "files,", len(albums), "albums, and", len(artists), "artists!")
+	log.Println("Found", len(newMediaFiles), "songs,", len(albums), "albums, and", len(artists), "artists!")
 
 	music = newMediaFiles
 }
