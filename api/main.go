@@ -27,7 +27,7 @@ func main() {
 	log.Println("Starting Harmony...")
 
 	log.Print("Indexing songs...")
-	indexSongs()
+	go indexSongs()
 
 	app := fiber.New(fiber.Config{
 		ServerHeader:          "Harmony",
