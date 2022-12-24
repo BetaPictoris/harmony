@@ -149,7 +149,7 @@ func newMediaFile(filePath string) MediaFile {
 
 	media := MediaFile{uuid.NewString(), filePath, m}
 
-	albums = addToAlbumIfExists(albums, media.Metadata.Album(), media)
+	albums = addToAlbumIfExists(albums, media)
 	return media
 }
 
@@ -188,14 +188,13 @@ addToAlbumIfExists
 Adds a MediaFile to an album (and creates an Album if one is not found), returns a new []Album array.
 
 albums		  	[]Album			The array of albums to check.
-albumTitle		string			The title of the album to add to, or create.
 media					MediaFile		The MediaFile to add to it.
 */
-func addToAlbumIfExists(albums []Album, albumTitle string, media MediaFile) []Album {
+func addToAlbumIfExists(albums []Album, media MediaFile) []Album {
 	albumFound := false
 
 	for i := 0; i < len(albums); i++ {
-		if albums[i].Title == albumTitle {
+		if albums[i].Title == media.Metadata.Album() {
 			albums[i] = addToAlbum(albums[i], media)
 			albumFound = true
 			break
@@ -203,7 +202,7 @@ func addToAlbumIfExists(albums []Album, albumTitle string, media MediaFile) []Al
 	}
 
 	if !albumFound {
-		a := newAlbum(albumTitle)
+		a := newAlbum(media.Metadata.Album())
 		a = addToAlbum(a, media)
 		albums = append(albums, a)
 	}
