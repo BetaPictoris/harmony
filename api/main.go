@@ -390,13 +390,16 @@ func addToArtistIfExists(artists []Artist, album Album) ([]Artist, Album) {
 
 	for i := 0; i < len(artists); i++ {
 		if artists[i].Name == album.ArtistName {
+			// Check to see if the artist already has an album with this ID.
 			for _, a := range artists[i].AlbumIDs {
+				// If one is found stop here.
 				if a == album.Id {
 					artistFound = true
 					break
 				}
 			}
 
+			// If no album is found add it to the artist
 			if !artistFound {
 				artists[i], album = addToArtist(artists[i], album)
 				artistFound = true
@@ -405,11 +408,13 @@ func addToArtistIfExists(artists []Artist, album Album) ([]Artist, Album) {
 		}
 	}
 
+	// If an artist can't be found create a new one and add the album's ID to it.
 	if !artistFound {
 		a := newArtist(album.ArtistName)
 		a, album = addToArtist(a, album)
 		artists = append(artists, a)
 	}
 
+	// Return the new artists array and new album value.
 	return artists, album
 }
