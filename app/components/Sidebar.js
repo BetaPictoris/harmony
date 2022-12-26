@@ -4,7 +4,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebarHeader">
-        <img className="headerImg" src="/favicon.png" alt="Harmony" />
+        <img className="headerImg" src="/assets/svg/Ico.svg" alt="Harmony" />
       </div>
 
       <div className="sidebarLinks">
