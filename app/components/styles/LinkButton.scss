@@ -1,24 +1,41 @@
-.LinkButton {
-  margin: 10px;
+$borderRadius: 8px;
+$inHeight: 24px;
 
-  padding-left: 6px;
-  padding-right: 6px;
-  padding-top: 21px;
-  padding-bottom: 4px;
+$linkPadding: 3px;
+$linkPaddingSides: 6px;
+
+$imgLinkSpacing: 4px;
+
+.active {
+  background-color: #ffffff !important;
+}
+
+.LinkButton {
+  border-radius: $borderRadius;
+
+  padding-top: calc($linkPadding + 3px);
+  padding-bottom: $linkPadding;
+  padding-left: calc($linkPaddingSides + 3px);
+  padding-right: calc($linkPaddingSides + 3px);
 
   background-color: #f3f5ff;
-  color: #000;
 
-  text-decoration: none;
-
-  border-radius: 8px;
+  display: inline-block;
 
   > * {
-    height: 32px;
+    height: $inHeight;
   }
 
   > .LinkText {
-    padding-left: 12px;
-    font-size: 32px;
+    margin-left: $imgLinkSpacing;
+    position: relative;
+    bottom: 5px;
   }
+}
+
+.LinkButtonLink {
+  padding: calc($inHeight / 2);
+
+  text-decoration: none;
+  color: #000;
 }
