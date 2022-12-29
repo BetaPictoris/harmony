@@ -6,8 +6,6 @@ export default function LinkButton(props) {
     activeClass = "active";
   }
 
-  console.log(activeClass);
-
   return (
     <a className="LinkButtonLink" href={`/app#${props.path}`}>
       <div className={`LinkButton  ${activeClass}`}>

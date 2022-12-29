@@ -1,7 +1,19 @@
 import LinkButton from "./LinkButton";
 import "./styles/Sidebar.scss";
 
-export default function Sidebar() {
+const pages = ["search", "home", "library"];
+
+function isPage(page, currentPage) {
+  if (page === "home" && currentPage === "") {
+    return true;
+  }
+
+  return page === currentPage;
+}
+
+export default function Sidebar(props) {
+  let p = props.path.replace("#", "");
+
   return (
     <div className="sidebar">
       <div className="sidebarHeader">
@@ -9,9 +21,14 @@ export default function Sidebar() {
       </div>
 
       <div className="sidebarLinks">
-        <LinkButton path="search" icon="search" text="Search" />
-        <LinkButton path="" icon="home" text="Home" />
-        <LinkButton path="library" icon="library" text="Library" />
+        {pages.map((page) => (
+          <LinkButton
+            path={page === "home" ? "" : page}
+            icon={page}
+            text={page.charAt(0).toUpperCase() + page.slice(1)}
+            active={isPage(page, p)}
+          />
+        ))}
       </div>
     </div>
   );
