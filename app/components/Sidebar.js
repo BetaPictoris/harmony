@@ -1,4 +1,5 @@
 import LinkButton from "./LinkButton";
+import "./styles/Sidebar.scss";
 
 export default function Sidebar() {
   return (
@@ -9,7 +10,7 @@ export default function Sidebar() {
 
       <div className="sidebarLinks">
         <LinkButton path="search" icon="search" text="Search" />
-        <LinkButton path="" icon="home" text="Home" active={true} />
+        <LinkButton path="" icon="home" text="Home" />
         <LinkButton path="library" icon="library" text="Library" />
       </div>
     </div>
