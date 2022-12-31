@@ -87,7 +87,7 @@ func main() {
 			}
 		}
 
-		if (data == MediaFile{}) {
+		if (data.Id == MediaFile{}.Id) {
 			return c.SendStatus(404)
 		}
 		c.SendStatus(200)
@@ -110,6 +110,30 @@ func main() {
 
 		c.SendStatus(200)
 		return c.SendFile(filePath)
+	})
+
+	/*
+		GET: /api/v1/song/:ID/cover
+		Returns the covert art of a song with :ID
+	*/
+	v1api.Get("/songs/:ID/cover", func(c *fiber.Ctx) error {
+		// Find the song
+		var song MediaFile
+
+		for i := 0; i < len(music); i++ {
+			if music[i].Id == c.Params("ID") {
+				song = music[i]
+				break
+			}
+		}
+
+		// Open picture byte array as io.Reader
+		picture := song.Metadata.Picture().Data
+
+		// Set the content type
+		c.Set("Content-Type", "image/jpeg")
+		c.SendStatus(200)
+		return c.Send(picture)
 	})
 
 	/*
@@ -147,6 +171,43 @@ func main() {
 
 		c.SendStatus(200)
 		return c.JSON(data)
+	})
+
+	/*
+		GET: /api/v1/albums/:ID/cover
+		Returns the cover art of an album
+	*/
+	v1api.Get("/albums/:ID/cover", func(c *fiber.Ctx) error {
+		// Find the album
+		var album Album
+
+		for i := 0; i < len(albums); i++ {
+			if albums[i].Id == c.Params("ID") {
+				album = albums[i]
+				break
+			}
+		}
+
+		// Return 404 if album not found
+		if album.Id == "" {
+			return c.SendStatus(404)
+		}
+
+		// Get the album art of the first song
+		// Find the first song
+		var song MediaFile
+
+		for i := 0; i < len(music); i++ {
+			if music[i].Id == album.SongIDs[0] {
+				song = music[i]
+				break
+			}
+		}
+
+		// Send the album art
+		c.Set("Content-Type", "image/jpeg")
+		c.SendStatus(200)
+		return c.Send(song.Metadata.Picture().Data)
 	})
 
 	/*
