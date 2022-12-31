@@ -12,6 +12,8 @@ $linkWidthRight: 5vh;
 }
 
 .LinkButton {
+  width: 11vw;
+
   border-radius: $borderRadius;
 
   padding-top: calc($linkPadding + 3px);

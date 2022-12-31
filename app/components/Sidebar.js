@@ -44,12 +44,14 @@ export default function Sidebar(props) {
 
       <div className="sidebarFooter">
         <div className="footerText">
-          <LinkButton
-            path="settings"
-            icon="settings"
-            text="Settings"
-            active={isPage("settings", p)}
-          />
+          <span className="sidebarLink">
+            <LinkButton
+              path="settings"
+              icon="settings"
+              text="Settings"
+              active={isPage("settings", p)}
+            />
+          </span>
         </div>
       </div>
     </div>
