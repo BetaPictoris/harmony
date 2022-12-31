@@ -9,4 +9,6 @@ $marginTopBottom: 3vh;
   margin-right: $marginSides;
   margin-top: $marginTopBottom;
   margin-bottom: $marginTopBottom;
+
+  max-width: calc(100vw - 36vw);
 }
