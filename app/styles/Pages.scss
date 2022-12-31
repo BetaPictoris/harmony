@@ -1,4 +1,22 @@
+$marginTopBottom: 3vh;
+
 .pageTitle {
   margin: 0;
   margin-bottom: 10px;
+}
+
+.page {
+  overflow-y: scroll;
+  height: calc(100vh - (2 * $marginTopBottom));
+
+  // Hide the scrollbar
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.homeContent {
+  min-height: 100vh;
 }
