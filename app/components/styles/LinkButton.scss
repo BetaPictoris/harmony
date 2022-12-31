@@ -1,11 +1,11 @@
 $borderRadius: 8px;
-$inHeight: 24px;
+$inHeight: 2vh;
 
-$linkPadding: 3px;
-$linkPaddingSides: 6px;
+$linkPadding: 0.75vw;
+$linkPaddingSides: 2vw;
 
-$imgLinkSpacing: 4px;
-$linkWidthRight: 32px;
+$imgLinkSpacing: 1vw;
+$linkWidthRight: 5vh;
 
 .active {
   background-color: #ffffff !important;
@@ -37,6 +37,9 @@ $linkWidthRight: 32px;
 }
 
 .LinkButtonLink {
+  margin: 0;
+  padding: 0;
+
   padding: calc($inHeight / 2);
 
   text-decoration: none;
