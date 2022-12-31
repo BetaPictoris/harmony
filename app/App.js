@@ -1,11 +1,11 @@
 import React from "react";
 import Sidebar from "./components/Sidebar";
 
-import "./styles/App.css";
-
 import HomePage from "./pages/HomePage";
 import LibraryPage from "./pages/LibraryPage";
 import SearchPage from "./pages/SearchPage";
+
+import "./styles/App.scss";
 
 function App() {
   const [path, setPath] = React.useState(window.location.hash);

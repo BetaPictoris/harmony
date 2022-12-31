@@ -1,0 +1,12 @@
+$marginSides: 3vw;
+$marginTopBottom: 3vh;
+
+.content {
+  position: relative;
+  left: 18vw;
+
+  margin-left: $marginSides;
+  margin-right: $marginSides;
+  margin-top: $marginTopBottom;
+  margin-bottom: $marginTopBottom;
+}
