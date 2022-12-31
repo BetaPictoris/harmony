@@ -3,6 +3,10 @@ import ArtistsPage from "./library/ArtistsPage";
 import PlaylistsPage from "./library/PlaylistsPage";
 
 export default function LibraryPage(props) {
+  if (props.path === "#library") {
+    window.location.hash = "#library/albums";
+  }
+
   return (
     <div className="library page">
       <h1>Library</h1>
