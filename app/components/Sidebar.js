@@ -8,6 +8,10 @@ function isPage(page, currentPage) {
     return true;
   }
 
+  if (page === "library" && currentPage.startsWith("library")) {
+    return true;
+  }
+
   return page === currentPage;
 }
 
