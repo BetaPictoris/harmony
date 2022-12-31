@@ -144,7 +144,7 @@ func main() {
 		data := []BasicAlbum{}
 
 		for i := 0; i < len(albums); i++ {
-			data = append(data, BasicAlbum{albums[i].Id, albums[i].Title, albums[i].ArtistName})
+			data = append(data, BasicAlbum{albums[i].Id, albums[i].Title, albums[i].ArtistID})
 		}
 
 		c.SendStatus(200)
