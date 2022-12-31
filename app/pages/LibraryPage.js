@@ -13,6 +13,7 @@ const tabs = [
 ];
 
 export default function LibraryPage(props) {
+  // Default to albums page
   if (props.path === "#library") {
     window.location.hash = "#library/albums";
   }
@@ -20,9 +21,13 @@ export default function LibraryPage(props) {
   return (
     <div className="library page">
       <h1 className="pageTitle">Library</h1>
+
+      {/* Tabs to switch to/from subpages */}
       <div className="libraryTabsbar">
         <TabBar tabs={tabs} path={props.path} />
       </div>
+
+      {/* Library subpage router using URL hash */}
       <div className="librarySubpage">
         {props.path === "#library/albums" && <AlbumsPage />}
         {props.path === "#library/artists" && <ArtistsPage />}

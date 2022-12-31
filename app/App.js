@@ -20,6 +20,7 @@ function App() {
     <div className="App">
       <Sidebar path={path} />
       <div className="content">
+        {/* Router using URL hash */}
         {path === "" && <HomePage />}
 
         {path === "#search" && <SearchPage />}
