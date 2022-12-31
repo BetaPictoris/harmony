@@ -1,7 +1,7 @@
 export default function SearchPage() {
   return (
     <div className="search page">
-      <h1>Search</h1>
+      <h1 className="pageTitle">Search</h1>
     </div>
   );
 }

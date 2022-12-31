@@ -1,0 +1,15 @@
+.tabBarButton {
+  cursor: pointer;
+
+  background-color: #eaeeff;
+  border: none;
+  border-radius: 4px;
+
+  padding: 8px;
+  font-size: 0.9em;
+  margin-right: 8px;
+}
+
+.activeTabBarButton {
+  border: 1.5px solid #385de3;
+}
