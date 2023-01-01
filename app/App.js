@@ -9,7 +9,7 @@ import SettingsPage from "./pages/SettingsPage";
 import "./styles/App.scss";
 import "./styles/Pages.scss";
 
-function App() {
+export default function App() {
   const [path, setPath] = React.useState(window.location.hash);
 
   window.onhashchange = () => {
@@ -30,5 +30,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
