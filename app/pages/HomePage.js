@@ -11,7 +11,7 @@ export default function HomePage() {
       </div>
       <div className="homeFooter pageFooter">
         Made with <span className="heart">❤️</span> by{" "}
-        <a href="//github.com/BetaPictoris" target="_blank">
+        <a href="//github.com/BetaPictoris" target="_blank" rel="noreferrer">
           Beta Pictoris
         </a>
       </div>
