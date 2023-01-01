@@ -1,6 +1,5 @@
 $marginSides: 3vw;
 $marginTopBottom: 3vh;
-$linkColor: #385de3;
 
 .content {
   position: relative;
@@ -12,14 +11,4 @@ $linkColor: #385de3;
   margin-bottom: $marginTopBottom;
 
   max-width: calc(100vw - 21vw);
-}
-
-a {
-  color: $linkColor;
-  text-decoration: none;
-
-  &:hover {
-    color: darken($linkColor, 10%);
-    text-decoration: underline;
-  }
 }
