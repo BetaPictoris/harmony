@@ -299,7 +299,12 @@ func indexSongs() {
 
 type MediaFile struct {
 	Id       string
-	Path     string
+	ArtistID string
+	AlbumID  string
+
+	Path  string
+	Title string
+
 	Metadata tag.Metadata
 }
 
@@ -325,13 +330,16 @@ func newMediaFile(filePath string) MediaFile {
 		log.Println("Failed to read file metadata:", err)
 	}
 
-	media := MediaFile{uuid.NewString(), filePath, m}
+	media := MediaFile{uuid.NewString(), "", "", filePath, m.Title(), m}
 
 	albums = addToAlbumIfExists(albums, media)
 	newArtists, albumWithID := addToArtistIfExists(artists, albums[len(albums)-1])
 
 	albums[len(albums)-1].ArtistID = albumWithID.ArtistID
 	artists = newArtists
+
+	media.AlbumID = albums[len(albums)-1].Id
+	media.ArtistID = artists[len(artists)-1].Id
 
 	return media
 }
