@@ -22,7 +22,7 @@ var (
 )
 
 const (
-	MEDIA_DIR = "/mnt/c/Users/beta/Music/Music"
+	MEDIA_DIR = "/Users/beta/Music/Music"
 )
 
 func main() {
@@ -298,9 +298,8 @@ func indexSongs() {
 }
 
 type MediaFile struct {
-	Id   string
-	Path string
-
+	Id       string
+	Path     string
 	Metadata tag.Metadata
 }
 
