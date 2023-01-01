@@ -26,4 +26,4 @@ clean/harmony:
 	rm -fv build/harmony
 
 start:
-	./build/harmony
+	cd build; ./harmony

@@ -22,7 +22,7 @@ var (
 )
 
 const (
-	MEDIA_DIR = "/Users/beta/Music/Music"
+	MEDIA_DIR = "/mnt/c/Users/beta/Music/Music"
 )
 
 func main() {
@@ -37,6 +37,8 @@ func main() {
 		AppName:               "Harmony",
 		DisableStartupMessage: true,
 	})
+
+	app.Static("/app", "./app")
 
 	v1api := app.Group("/api").Group("/v1")
 
