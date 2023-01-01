@@ -91,6 +91,7 @@ func main() {
 		if (data.Id == types.MediaFile{}.Id) {
 			return c.SendStatus(404)
 		}
+
 		c.SendStatus(200)
 		return c.JSON(data)
 	})
@@ -128,13 +129,10 @@ func main() {
 			}
 		}
 
-		// Open picture byte array as io.Reader
-		picture := song.Metadata.Picture().Data
-
 		// Set the content type
 		c.Set("Content-Type", "image/jpeg")
 		c.SendStatus(200)
-		return c.Send(picture)
+		return c.Send(song.Metadata.Picture().Data)
 	})
 
 	/*
