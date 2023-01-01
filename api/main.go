@@ -32,8 +32,8 @@ func main() {
 
 	app := fiber.New(fiber.Config{
 		ServerHeader:          "Harmony",
-		CaseSensitive:         true,
 		AppName:               "Harmony",
+		CaseSensitive:         true,
 		DisableStartupMessage: true,
 	})
 
