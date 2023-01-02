@@ -40,7 +40,11 @@ export default function AlbumPage(props) {
 
       <div className="songs">
         {songs.map((song) => {
-          return <Song key={song} id={song} />;
+          return (
+            <div className="SongCont">
+              <Song key={song} id={song} />
+            </div>
+          );
         })}
       </div>
     </div>

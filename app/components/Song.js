@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./styles/Song.scss";
+
 export default function Song(props) {
   const [song, setSong] = React.useState({});
   const [isLoaded, setIsLoaded] = React.useState(false);
@@ -16,14 +18,12 @@ export default function Song(props) {
 
   // Render song data
   return (
-    <div>
+    <div className="Song">
       {isLoaded ? (
-        <div>
-          <div>
-            <h1>{song.Title}</h1>
-            <button>Play</button>
-          </div>
-        </div>
+        <>
+          <button className="SongPlayBttn">Play</button>
+          <span className="SongTitles">{song.Title}</span>
+        </>
       ) : (
         <div>Loading...</div>
       )}
