@@ -9,7 +9,9 @@ $albumPageImgSize: 32vh;
 }
 
 .albumPageInfo {
-  position: absolute;
-  top: 0;
-  left: calc($albumPageImgSize + 1rem);
+  display: inline-block;
+
+  margin: 0;
+  width: calc(100% - $albumPageImgSize - 2.5rem);
+  padding-left: 2rem;
 }

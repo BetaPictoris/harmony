@@ -17,7 +17,7 @@ export default function AlbumPage(props) {
       .then((data) => {
         setAlbum(data);
         setIsLoaded(true);
-        setSongs(data.Songs);
+        setSongs(data.SongIDs);
       });
   }, [props.path]);
 
@@ -38,7 +38,11 @@ export default function AlbumPage(props) {
         </div>
       </div>
 
-      <div className="songs"></div>
+      <div className="songs">
+        {songs.map((song) => {
+          return <Song key={song} id={song} />;
+        })}
+      </div>
     </div>
   );
 }
