@@ -1,0 +1,15 @@
+$albumPageImgSize: 32vh;
+
+.albumPageImg {
+  width: $albumPageImgSize;
+  height: $albumPageImgSize;
+  object-fit: cover;
+
+  border-radius: 8px;
+}
+
+.albumPageInfo {
+  position: absolute;
+  top: 0;
+  left: calc($albumPageImgSize + 1rem);
+}
