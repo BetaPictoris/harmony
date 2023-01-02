@@ -6,6 +6,8 @@ import LibraryPage from "./pages/LibraryPage";
 import SearchPage from "./pages/SearchPage";
 import SettingsPage from "./pages/SettingsPage";
 
+import AlbumPage from "./pages/AlbumPage";
+
 import "./styles/App.scss";
 import "./styles/Pages.scss";
 
@@ -26,6 +28,8 @@ export default function App() {
         {path === "#search" && <SearchPage />}
         {path.startsWith("#library") && <LibraryPage path={path} />}
         {path === "#settings" && <SettingsPage />}
+
+        {path.startsWith("#album") && <AlbumPage path={path} />}
       </div>
     </div>
   );

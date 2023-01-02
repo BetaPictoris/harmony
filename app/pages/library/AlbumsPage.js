@@ -13,7 +13,6 @@ export default function AlbumsPage() {
       .then((data) => {
         setAlbums(data);
         setAlbumsLoaded(true);
-        console.log(data);
       });
   }, []);
 
