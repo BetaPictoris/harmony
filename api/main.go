@@ -21,7 +21,7 @@ var (
 )
 
 const (
-	MEDIA_DIR = "/Users/beta/Music/Music"
+	MEDIA_DIR = "/mnt/c/Users/beta/Music/Music"
 )
 
 func main() {
