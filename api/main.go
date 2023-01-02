@@ -129,6 +129,11 @@ func main() {
 			}
 		}
 
+		// Return 404 if the song doesn't exist or doesn't have a cover
+		if song.Id == "" || song.Metadata.Picture() == nil {
+			return c.SendStatus(404)
+		}
+
 		// Set the content type
 		c.Set("Content-Type", "image/jpeg")
 		c.SendStatus(200)
@@ -201,6 +206,11 @@ func main() {
 				song = music[i]
 				break
 			}
+		}
+
+		// Return 404 if the song doesn't exist or doesn't have a cover
+		if song.Id == "" || song.Metadata.Picture() == nil {
+			return c.SendStatus(404)
 		}
 
 		// Send the album art
