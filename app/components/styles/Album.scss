@@ -1,0 +1,21 @@
+$width: 360px;
+$accentColor: #385de3;
+
+.album {
+  width: $width;
+  border-radius: 8px;
+}
+
+.albumImg {
+  width: $width;
+  height: $width;
+}
+
+.albumInfo {
+  width: $width;
+  margin: 0;
+  padding: 12px;
+
+  background-color: $accentColor;
+  color: #fff;
+}
