@@ -29,12 +29,12 @@ start:
 	cd build; ./harmony
 
 # Dev AIO tasks
-dev: clean dev/app dev/harmony
+dev: clean dev/app dev/harmony start
 
 dev/app:
-	clean/app
+	make clean/app
 	make build/app
 
 dev/harmony:
-	clean/harmony
+	make clean/harmony
 	make build/harmony
