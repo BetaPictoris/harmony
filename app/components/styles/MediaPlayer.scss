@@ -37,5 +37,20 @@ $height: 8vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .mediaPlayerControlsPlayBttn {
+      height: calc($height - 2vh);
+      width: calc($height - 2vh);
+      margin: 1vh;
+      border: none;
+      border-radius: 8px;
+      background-color: $accentColor;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      cursor: pointer;
+    }
   }
 }

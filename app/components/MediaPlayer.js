@@ -56,7 +56,16 @@ export default function MediaPlayer(props) {
       </span>
 
       <span className="mediaPlayerControls">
-        <button onClick={togglePlaying}> {playing ? "Pause" : "Play"} </button>
+        <button onClick={togglePlaying} className="mediaPlayerControlsPlayBttn">
+          <img
+            src={
+              playing
+                ? "/app/assets/svg/player/pause.svg"
+                : "/app/assets/svg/player/play.svg"
+            }
+            alt="Play/Pause"
+          />
+        </button>
       </span>
     </div>
   );
