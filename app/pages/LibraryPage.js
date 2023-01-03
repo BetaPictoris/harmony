@@ -28,7 +28,7 @@ export default function LibraryPage(props) {
       </div>
 
       {/* Library subpage router using URL hash */}
-      <div className="librarySubpage">
+      <div className="librarySubpage pageContent">
         {props.path === "#library/albums" && <AlbumsPage />}
         {props.path === "#library/artists" && <ArtistsPage />}
         {props.path === "#library/playlists" && <PlaylistsPage />}

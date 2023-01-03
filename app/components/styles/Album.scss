@@ -1,6 +1,8 @@
 $width: 240px;
-$blurHover: 5px;
 $accentColor: #385de3;
+
+$blurHover: 5px;
+$darkenHover: 0.5;
 
 .album {
   display: flex;
@@ -26,6 +28,9 @@ $accentColor: #385de3;
 
   margin: 0;
   padding: 0;
+
+  // Transition
+  transition: all 0.5s ease;
 }
 
 .albumInfo {
@@ -39,12 +44,12 @@ $accentColor: #385de3;
 
 /* Blur image on hover */
 .albumLink:hover .albumImg {
-  -webkit-filter: blur($blurHover);
-  -moz-filter: blur($blurHover);
-  -o-filter: blur($blurHover);
-  -ms-filter: blur($blurHover);
-  filter: blur($blurHover);
-  transition: all 0.5s ease;
+  // Darken and blur
+  -webkit-filter: brightness($darkenHover) blur($blurHover);
+  -moz-filter: brightness($darkenHover) blur($blurHover);
+  -o-filter: brightness($darkenHover) blur($blurHover);
+  -ms-filter: brightness($darkenHover) blur($blurHover);
+  filter: brightness($darkenHover) blur($blurHover);
 }
 
 .albumLink:hover .albumInfo {
