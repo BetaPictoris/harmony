@@ -15,6 +15,7 @@ export default function MediaPlayer(props) {
       if (sessionStorage.getItem("currentSong") !== currentPlaying) {
         // Update currentPlaying
         setCurrentPlaying(sessionStorage.getItem("currentSong"));
+        document.querySelector("audio").play(); // Start playing
 
         // Fetch song data from API
         fetch(`/api/v1/songs/${sessionStorage.getItem("currentSong")}`)
@@ -43,13 +44,20 @@ export default function MediaPlayer(props) {
     <div className="mediaPlayer">
       <audio autoPlay={playing} src={`/api/v1/songs/${currentPlaying}/audio`} />
 
-      <div className="mediaPlayerInfo">
-        <div className="mediaPlayerInfoTitle">{song.id}</div>
-      </div>
+      <span className="mediaPlayerInfo">
+        <img
+          className="mediaPlayerInfoImg"
+          src={`/api/v1/songs/${song.Id}/cover`}
+          alt="Album Art"
+        />
+        <span className="mediaPlayerInfoTitle">
+          {song.Title ? song.Title : "Not playing..."}
+        </span>
+      </span>
 
-      <div className="mediaPlayerControls">
+      <span className="mediaPlayerControls">
         <button onClick={togglePlaying}> {playing ? "Pause" : "Play"} </button>
-      </div>
+      </span>
     </div>
   );
 }

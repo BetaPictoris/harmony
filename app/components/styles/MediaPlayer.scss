@@ -7,4 +7,35 @@ $height: 8vh;
   background-color: lighten($bg, 2%);
   height: $height;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .mediaPlayerInfo {
+    display: flex;
+    width: 40%;
+
+    .mediaPlayerInfoImg {
+      height: calc($height - 2vh);
+      width: calc($height - 2vh);
+      margin: 1vh;
+
+      border-radius: 8px;
+    }
+
+    .mediaPlayerInfoTitle {
+      margin: 1vh;
+      height: calc($height - 2vh);
+      width: calc(100% - #{$height});
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .mediaPlayerControls {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
