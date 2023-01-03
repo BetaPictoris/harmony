@@ -11,4 +11,15 @@ $marginTopBottom: 3vh;
   margin-bottom: $marginTopBottom;
 
   max-width: calc(100vw - 21vw);
+  max-height: calc(100vh - 8vh);
+}
+
+.Controls {
+  position: absolute;
+  bottom: 0;
+  left: 18vw;
+  right: 0;
+  background-color: #eaeeff;
+
+  width: calc(100vw - 18vw);
 }

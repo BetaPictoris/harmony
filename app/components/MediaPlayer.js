@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./styles/MediaPlayer.scss";
+
 export default function MediaPlayer(props) {
   const [playing, setPlaying] = React.useState(false);
   const [currentPlaying, setCurrentPlaying] = React.useState("");

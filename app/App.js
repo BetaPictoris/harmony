@@ -1,5 +1,7 @@
 import React from "react";
+
 import Sidebar from "./components/Sidebar";
+import MediaPlayer from "./components/MediaPlayer";
 
 import HomePage from "./pages/HomePage";
 import LibraryPage from "./pages/LibraryPage";
@@ -30,6 +32,9 @@ export default function App() {
         {path === "#settings" && <SettingsPage />}
 
         {path.startsWith("#album") && <AlbumPage path={path} />}
+      </div>
+      <div className="Controls">
+        <MediaPlayer />
       </div>
     </div>
   );

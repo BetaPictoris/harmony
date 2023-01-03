@@ -16,12 +16,20 @@ export default function Song(props) {
       });
   }, [props.id]);
 
+  // Play song
+  function play() {
+    // Set current song in sessionStorage
+    sessionStorage.setItem("currentSong", props.id);
+  }
+
   // Render song data
   return (
     <div className="Song">
       {isLoaded ? (
         <>
-          <button className="SongPlayBttn">Play</button>
+          <button className="SongPlayBttn" onClick={play}>
+            Play
+          </button>
           <span className="SongTitles">{song.Title}</span>
         </>
       ) : (

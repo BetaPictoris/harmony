@@ -1,0 +1,10 @@
+$bg: #eaeeff;
+$accentColor: #385de3;
+
+$height: 8vh;
+
+.mediaPlayer {
+  background-color: lighten($bg, 2%);
+  height: $height;
+  width: 100%;
+}

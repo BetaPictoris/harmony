@@ -7,7 +7,7 @@ $marginTopBottom: 3vh;
 
 .page {
   overflow-y: scroll;
-  height: calc(100vh - (2 * $marginTopBottom));
+  height: calc(100vh - $marginTopBottom - 8vh);
 
   // Hide the scrollbar
   &::-webkit-scrollbar {
