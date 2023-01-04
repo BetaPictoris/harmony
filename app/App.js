@@ -9,6 +9,7 @@ import SearchPage from "./pages/SearchPage";
 import SettingsPage from "./pages/SettingsPage";
 
 import AlbumPage from "./pages/media/AlbumPage";
+import ArtistPage from "./pages/media/ArtistPage";
 
 import "./styles/App.scss";
 import "./styles/Pages.scss";
@@ -32,6 +33,7 @@ export default function App() {
         {path === "#settings" && <SettingsPage />}
 
         {path.startsWith("#album") && <AlbumPage path={path} />}
+        {path.startsWith("#artist") && <ArtistPage path={path} />}
       </div>
       <div className="Controls">
         <MediaPlayer />
