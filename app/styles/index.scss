@@ -24,3 +24,22 @@ a {
     text-decoration: underline;
   }
 }
+
+button {
+  background-color: $accentColor;
+  color: #fff;
+  border: lighten($accentColor, 20%) 1px solid;
+
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($accentColor, 10%);
+  }
+
+  &:active {
+    background-color: darken($accentColor, 10%);
+  }
+}
