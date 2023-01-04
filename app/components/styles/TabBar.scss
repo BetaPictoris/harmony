@@ -13,6 +13,10 @@ $accentColor: #385de3;
   font-size: 0.9em;
   margin-right: 8px;
 
+  &.activeTabBarButton {
+    border: 1.5px solid $accentColor;
+  }
+
   &:hover {
     background-color: darken($bgColor, 10%);
   }
@@ -20,8 +24,6 @@ $accentColor: #385de3;
   &:active {
     background-color: darken($bgColor, 20%);
   }
-}
 
-.activeTabBarButton {
-  border: 1.5px solid $accentColor;
+  transition: all 0.5s ease;
 }
