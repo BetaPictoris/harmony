@@ -1,5 +1,5 @@
 import React from "react";
-import Song from "../components/Song";
+import Song from "../../components/Song";
 
 import "./styles/AlbumPage.scss";
 

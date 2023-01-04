@@ -8,7 +8,7 @@ import LibraryPage from "./pages/LibraryPage";
 import SearchPage from "./pages/SearchPage";
 import SettingsPage from "./pages/SettingsPage";
 
-import AlbumPage from "./pages/AlbumPage";
+import AlbumPage from "./pages/media/AlbumPage";
 
 import "./styles/App.scss";
 import "./styles/Pages.scss";
