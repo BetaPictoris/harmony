@@ -9,6 +9,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/exp/slices"
+	"gopkg.in/ini.v1"
 
 	"github.com/BetaPictoris/harmony/api/types"
 )
@@ -20,14 +21,20 @@ var (
 
 	supportedMediaTypes = []string{"audio/mpeg", "audio/x-flac"}
 	updatingIndex       = false
-)
 
-const (
-	MEDIA_DIR = "/Users/beta/Music/Music"
+	mediaDir string
 )
 
 func main() {
 	log.Println("Starting Harmony...")
+
+	// Load config file
+	cfg, err := ini.Load("./data/config.ini")
+	if err != nil {
+		log.Fatal("Failed to load config file: ", err)
+	}
+
+	mediaDir = cfg.Section("library").Key("path").String()
 
 	// Update local song index in the background.
 	go indexSongs()
@@ -267,9 +274,13 @@ func main() {
 		return c.JSON(data)
 	})
 
+	// Get the host and port
+	host := cfg.Section("server").Key("host").String()
+	port := cfg.Section("server").Key("port").String()
+
 	// Start listening for requests
-	log.Println("Harmony listening on http://127.0.0.1:3000")
-	app.Listen("127.0.0.1:3000")
+	log.Println("Harmony listening on http://" + host + ":" + port)
+	app.Listen(host + ":" + port)
 }
 
 /*
@@ -285,7 +296,7 @@ func indexSongs() {
 	updatingIndex = true
 	log.Println("[INDEX] Updating song index...")
 	var newMediaFiles []types.MediaFile
-	var dirsToIndex = []string{MEDIA_DIR}
+	var dirsToIndex = []string{mediaDir}
 
 	var dirsIndexSize = len(dirsToIndex)
 	for i := 0; i < dirsIndexSize; i++ {
