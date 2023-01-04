@@ -1,0 +1,16 @@
+.recentlyPlayed {
+  display: ruby;
+  width: 100%;
+
+  overflow-x: hidden;
+
+  > .album {
+    margin-right: 1vw;
+  }
+}
+
+.heart {
+  color: red;
+
+  cursor: default;
+}
