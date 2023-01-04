@@ -10,25 +10,12 @@ $songHeight: 48px;
 
   align-items: center;
 
-  > .SongPlayBttn {
-    background-color: $accentColor;
-    border-radius: 8px;
-    padding: 8px;
+  > .SongTitles {
+    width: 95%;
+  }
 
+  > .SongPlayBttn {
     margin-left: 8px;
     margin-right: 8px;
-
-    border: none;
-    color: #fff;
-
-    cursor: pointer;
-
-    &:hover {
-      background-color: lighten($accentColor, 10%);
-    }
-
-    &:active {
-      background-color: darken($accentColor, 10%);
-    }
   }
 }

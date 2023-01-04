@@ -1,5 +1,7 @@
 import React from "react";
 
+import Button from "./Button";
+
 import "./styles/Song.scss";
 
 export default function Song(props) {
@@ -27,10 +29,11 @@ export default function Song(props) {
     <div className="Song">
       {isLoaded ? (
         <>
-          <button className="SongPlayBttn" onClick={play}>
-            Play
-          </button>
           <span className="SongTitles">{song.Title}</span>
+
+          <span className="SongPlayBttn">
+            <Button onClick={play}>Play</Button>
+          </span>
         </>
       ) : (
         <div>Loading...</div>
