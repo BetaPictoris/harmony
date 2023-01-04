@@ -4,32 +4,39 @@ all: build
 
 # Build the app and the server
 build:
-	mkdir build
+	mkdir build/
 	make build/harmony
 	make build/app
+	make build/data
 
 build/harmony:
-	cd api; go build -o ../build
-	mv build/api build/harmony
+	cd api; go build -o ../build/
+	mv ./build/api ./build/harmony
 
 build/app:
-	BUILD_PATH='./build/app' react-app-rewired build
+	BUILD_PATH='./build/app/' react-app-rewired build
+
+build/data:
+	cp -rv ./examples/ ./build/data/
 
 # Development tasks
 clean: clean/app clean/harmony
-	rm -rfv build
+	rm -rfv ./build/
 
 clean/app:
-	rm -rfv build/app
+	rm -rfv ./build/app/
 
 clean/harmony:
-	rm -fv build/harmony
+	rm -fv ./build/harmony
+
+clean/data:
+	rm -fv ./build/data/
 
 start:
 	cd build; ./harmony
 
 # Dev AIO tasks
-dev: clean dev/app dev/harmony start
+dev: clean build start
 
 dev/app:
 	make clean/app
