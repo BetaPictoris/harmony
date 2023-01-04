@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"mime"
+	"strconv"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,7 @@ var (
 	artists []types.Artist
 
 	supportedMediaTypes = []string{"audio/mpeg", "audio/x-flac"}
+	updatingIndex       = false
 )
 
 const (
@@ -57,6 +59,15 @@ func main() {
 	v1api.Get("/index/update", func(c *fiber.Ctx) error {
 		go indexSongs()
 		return c.SendStatus(202)
+	})
+
+	/*
+		GET: /api/v1/index/status
+		Returns the status of the song index.
+	*/
+	v1api.Get("/index/status", func(c *fiber.Ctx) error {
+		c.SendStatus(200)
+		return c.SendString(strconv.FormatBool(updatingIndex))
 	})
 
 	/*
@@ -271,6 +282,7 @@ Params: None
 Returns: None
 */
 func indexSongs() {
+	updatingIndex = true
 	log.Println("[INDEX] Updating song index...")
 	var newMediaFiles []types.MediaFile
 	var dirsToIndex = []string{MEDIA_DIR}
@@ -304,6 +316,7 @@ func indexSongs() {
 	}
 
 	log.Println("[INDEX] Found", len(newMediaFiles), "songs,", len(albums), "albums, and", len(artists), "artists!")
+	updatingIndex = false
 
 	music = newMediaFiles
 }
