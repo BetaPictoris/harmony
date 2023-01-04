@@ -1,15 +1,27 @@
+$bgColor: #eaeeff;
+$accentColor: #385de3;
+
 .tabBarButton {
   cursor: pointer;
 
-  background-color: #eaeeff;
+  color: #000;
+  background-color: $bgColor;
   border: none;
   border-radius: 4px;
 
   padding: 8px;
   font-size: 0.9em;
   margin-right: 8px;
+
+  &:hover {
+    background-color: darken($bgColor, 10%);
+  }
+
+  &:active {
+    background-color: darken($bgColor, 20%);
+  }
 }
 
 .activeTabBarButton {
-  border: 1.5px solid #385de3;
+  border: 1.5px solid $accentColor;
 }
