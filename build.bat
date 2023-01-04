@@ -1,0 +1,1 @@
+cd ..; del .\build; .\build.bat; cd .\build\; mkdir data; copy ..\examples\* data;  .\harmony.exe

@@ -4,10 +4,12 @@ import (
 	"io/ioutil"
 	"log"
 	"mime"
+	"strconv"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/exp/slices"
+	"gopkg.in/ini.v1"
 
 	"github.com/BetaPictoris/harmony/api/types"
 )
@@ -18,14 +20,21 @@ var (
 	artists []types.Artist
 
 	supportedMediaTypes = []string{"audio/mpeg", "audio/x-flac"}
-)
+	updatingIndex       = false
 
-const (
-	MEDIA_DIR = "/mnt/c/Users/beta/Music/Music"
+	mediaDir string
 )
 
 func main() {
 	log.Println("Starting Harmony...")
+
+	// Load config file
+	cfg, err := ini.Load("./data/config.ini")
+	if err != nil {
+		log.Fatal("Failed to load config file: ", err)
+	}
+
+	mediaDir = cfg.Section("library").Key("path").String()
 
 	// Update local song index in the background.
 	go indexSongs()
@@ -57,6 +66,15 @@ func main() {
 	v1api.Get("/index/update", func(c *fiber.Ctx) error {
 		go indexSongs()
 		return c.SendStatus(202)
+	})
+
+	/*
+		GET: /api/v1/index/status
+		Returns the status of the song index.
+	*/
+	v1api.Get("/index/status", func(c *fiber.Ctx) error {
+		c.SendStatus(200)
+		return c.SendString(strconv.FormatBool(updatingIndex))
 	})
 
 	/*
@@ -127,6 +145,11 @@ func main() {
 				song = music[i]
 				break
 			}
+		}
+
+		// Return 404 if the song doesn't exist or doesn't have a cover
+		if song.Id == "" || song.Metadata.Picture() == nil {
+			return c.SendStatus(404)
 		}
 
 		// Set the content type
@@ -203,6 +226,11 @@ func main() {
 			}
 		}
 
+		// Return 404 if the song doesn't exist or doesn't have a cover
+		if song.Id == "" || song.Metadata.Picture() == nil {
+			return c.SendStatus(404)
+		}
+
 		// Send the album art
 		c.Set("Content-Type", "image/jpeg")
 		c.SendStatus(200)
@@ -246,9 +274,13 @@ func main() {
 		return c.JSON(data)
 	})
 
+	// Get the host and port
+	host := cfg.Section("server").Key("host").String()
+	port := cfg.Section("server").Key("port").String()
+
 	// Start listening for requests
-	log.Println("Harmony listening on http://127.0.0.1:3000")
-	app.Listen("127.0.0.1:3000")
+	log.Println("Harmony listening on http://" + host + ":" + port)
+	app.Listen(host + ":" + port)
 }
 
 /*
@@ -261,9 +293,10 @@ Params: None
 Returns: None
 */
 func indexSongs() {
+	updatingIndex = true
 	log.Println("[INDEX] Updating song index...")
 	var newMediaFiles []types.MediaFile
-	var dirsToIndex = []string{MEDIA_DIR}
+	var dirsToIndex = []string{mediaDir}
 
 	var dirsIndexSize = len(dirsToIndex)
 	for i := 0; i < dirsIndexSize; i++ {
@@ -294,6 +327,7 @@ func indexSongs() {
 	}
 
 	log.Println("[INDEX] Found", len(newMediaFiles), "songs,", len(albums), "albums, and", len(artists), "artists!")
+	updatingIndex = false
 
 	music = newMediaFiles
 }

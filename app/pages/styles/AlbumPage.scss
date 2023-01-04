@@ -1,0 +1,21 @@
+$albumPageImgSize: 32vh;
+
+.albumPageImg {
+  width: $albumPageImgSize;
+  height: $albumPageImgSize;
+  object-fit: cover;
+
+  border-radius: 8px;
+}
+
+.albumPageInfo {
+  display: inline-block;
+
+  margin: 0;
+  width: calc(100% - $albumPageImgSize - 2.5rem);
+  padding-left: 2rem;
+}
+
+.SongCont {
+  margin-top: 1rem;
+}

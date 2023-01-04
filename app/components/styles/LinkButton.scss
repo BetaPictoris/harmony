@@ -11,40 +11,46 @@ $linkWidthRight: 5vh;
   background-color: #ffffff !important;
 }
 
-.LinkButton {
-  margin-bottom: 6px;
-  width: 11vw;
-
-  border-radius: $borderRadius;
-
-  padding-top: calc($linkPadding + 3px);
-  padding-bottom: $linkPadding;
-  padding-left: calc($linkPaddingSides + 3px);
-  padding-right: calc($linkPaddingSides + 3px);
-
-  background-color: #f3f5ff;
-
-  display: inline-block;
-
-  > * {
-    height: $inHeight;
-  }
-
-  > .LinkText {
-    margin-left: $imgLinkSpacing;
-    margin-right: $linkWidthRight;
-
-    position: relative;
-    bottom: 5px;
-  }
-}
-
 .LinkButtonLink {
   margin: 0;
-  padding: 0;
-
-  padding: calc($inHeight / 2);
 
   text-decoration: none;
   color: #000;
+
+  > .LinkButton {
+    margin-bottom: 6px;
+    width: 12vw;
+
+    border-radius: $borderRadius;
+
+    padding: $linkPadding $linkPaddingSides;
+
+    background-color: #f3f5ff;
+
+    > .LinkImage {
+      margin-left: $imgLinkSpacing;
+      margin-right: $imgLinkSpacing;
+
+      display: inline;
+    }
+
+    > * {
+      height: $inHeight;
+    }
+
+    > .LinkText {
+      margin-left: $imgLinkSpacing;
+      margin-right: $linkWidthRight;
+
+      display: inline-block;
+    }
+
+    transition: all 0.5s ease;
+  }
+
+  &:hover {
+    > .LinkButton {
+      background-color: darken(#f3f5ff, 10%);
+    }
+  }
 }
