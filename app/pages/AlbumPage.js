@@ -32,7 +32,7 @@ export default function AlbumPage(props) {
         />
         <div className="albumPageInfo">
           <h1 className="albumPageHeader">{album.Title}</h1>
-          <a className="albumPageLink" href={`#artists/${album.ArtistId}`}>
+          <a className="albumPageLink" href={`#artists/${album.ArtistID}`}>
             {album.ArtistName}
           </a>
         </div>
