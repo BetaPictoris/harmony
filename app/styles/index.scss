@@ -43,3 +43,7 @@ button {
     background-color: darken($accentColor, 10%);
   }
 }
+
+img {
+  pointer-events: none;
+}
