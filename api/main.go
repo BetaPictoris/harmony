@@ -296,9 +296,9 @@ func indexSongs() {
 	updatingIndex = true
 	log.Println("[INDEX] Updating song index...")
 	var newMediaFiles []types.MediaFile
-	var dirsToIndex = []string{mediaDir}
+	dirsToIndex := []string{mediaDir}
 
-	var dirsIndexSize = len(dirsToIndex)
+	dirsIndexSize := len(dirsToIndex)
 	for i := 0; i < dirsIndexSize; i++ {
 		files, err := ioutil.ReadDir(dirsToIndex[i])
 		if err != nil {
@@ -306,9 +306,9 @@ func indexSongs() {
 		}
 
 		for _, f := range files {
-			var filePath = dirsToIndex[i] + "/" + f.Name()
-			var fileExt = strings.Split(filePath, ".")[len(strings.Split(filePath, "."))-1]
-			var fileType = mime.TypeByExtension("." + fileExt)
+			filePath := dirsToIndex[i] + "/" + f.Name()
+			fileExt := strings.Split(filePath, ".")[len(strings.Split(filePath, "."))-1]
+			fileType := mime.TypeByExtension("." + fileExt)
 
 			if f.IsDir() {
 				dirsToIndex = append(dirsToIndex, filePath)
