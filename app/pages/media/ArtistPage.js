@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-import Section from "../../components/Section"
+import Section from "../../components/Section";
 import Album from "../../components/Album";
 
 export default function ArtistPage(props) {
@@ -19,18 +19,16 @@ export default function ArtistPage(props) {
         setIsLoaded(true);
         updateAlbums();
       });
-    
+  });
 
-  })
-
-  function updateAlbums() { 
+  function updateAlbums() {
     artist.AlbumIDs.forEach(function (aID, i) {
       fetch(`/api/v1/albums/${aID}`)
         .then((response) => response.json())
         .then((data) => {
           setAlbums([...albums, data]);
         });
-      })
+    });
   }
 
   return (
@@ -41,12 +39,12 @@ export default function ArtistPage(props) {
       <div className="artistAlbums">
         <Section title="Albums">
           <div className="artistAlbumsGrid">
-            {albums.map(album => (
+            {albums.map((album) => (
               <Album key={album.Id} id={album.Id} title={album.Title} />
             ))}
           </div>
         </Section>
       </div>
     </div>
-  )
+  );
 }
