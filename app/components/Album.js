@@ -5,7 +5,7 @@ export default function Album(props) {
     <div className="album">
       <a className="albumLink" href={`#album/${props.id}`}>
         <img
-          class="albumImg"
+          className="albumImg"
           src={`/api/v1/albums/${props.id}/cover`}
           alt={props.title}
         />
