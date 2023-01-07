@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/lithammer/fuzzysearch/fuzzy"
 	"golang.org/x/exp/slices"
 	"gopkg.in/ini.v1"
 
@@ -274,6 +275,33 @@ func main() {
 
 		c.SendStatus(200)
 		return c.JSON(data)
+	})
+
+	/*
+		GET: /api/v1/search/songs
+		Search for songs
+	*/
+	v1api.Get("/search/songs", func(c *fiber.Ctx) error {
+		var songNames []string
+
+		// Create a list of songNames
+		for i := 0; i < len(music); i++ {
+			songNames = append(songNames, music[i].Title)
+		}
+
+		searchNames := fuzzy.Find(c.Query("q"), songNames)
+
+		// Convert to MediaFiles
+		var searchSongs []types.BasicMediaFile
+
+		for i := 0; i < len(music); i++ {
+			if slices.Contains(searchNames, music[i].Title) {
+				searchSongs = append(searchSongs, types.BasicMediaFile{music[i].Id, music[i].Title})
+			}
+		}
+
+		c.SendStatus(200)
+		return c.JSON(searchSongs)
 	})
 
 	// Get the host and port
