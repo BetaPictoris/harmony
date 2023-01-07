@@ -14,6 +14,12 @@ $albumPageImgSize: 32vh;
   margin: 0;
   width: calc(100% - $albumPageImgSize - 2.5rem);
   padding-left: 2rem;
+
+  > * {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
 }
 
 .songs {

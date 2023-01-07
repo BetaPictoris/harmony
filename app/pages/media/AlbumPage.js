@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../../components/Button";
 import Song from "../../components/Song";
 
 import "./styles/AlbumPage.scss";
@@ -21,6 +22,13 @@ export default function AlbumPage(props) {
       });
   }, [props.path]);
 
+  // Play album
+  function play() {
+    var songIDs = songs.join(",");
+    var queue = sessionStorage.getItem("queue");
+    sessionStorage.setItem("queue", `${songIDs},${queue}`);
+  }
+
   // Render album data
   return (
     <div className="albumPage page">
@@ -35,6 +43,9 @@ export default function AlbumPage(props) {
           <a className="albumPageLink" href={`#artists/${album.ArtistID}`}>
             {album.ArtistName}
           </a>
+          <Button onClick={play} className="albumPageButton">
+            Play
+          </Button>
         </div>
       </div>
 
