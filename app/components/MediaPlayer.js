@@ -82,11 +82,13 @@ export default function MediaPlayer(props) {
       <audio autoPlay={playing} src={`/api/v1/songs/${currentPlaying}/audio`} />
 
       <span className="mediaPlayerInfo">
-        <img
-          className="mediaPlayerInfoImg"
-          src={`/api/v1/songs/${song.Id}/cover`}
-          alt="Album Art"
-        />
+        {song.Id && (
+          <img
+            className="mediaPlayerInfoImg"
+            src={`/api/v1/songs/${song.Id}/cover`}
+            alt="Album Art"
+          />
+        )}
         <span className="mediaPlayerInfoTitle">
           {song.Title ? song.Title : "Not playing..."}
         </span>
