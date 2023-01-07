@@ -286,6 +286,26 @@ func main() {
 }
 
 /*
+isSongIndexed
+Checks if a song is already indexed.
+
+Params:
+
+	songPath - The path of the song to check
+
+Returns: True if the song is indexed, false if not
+*/
+func isSongIndexed(songPath string) bool {
+	for i := 0; i < len(music); i++ {
+		if music[i].Path == songPath {
+			return true
+		}
+	}
+
+	return false
+}
+
+/*
 indexSongs
 Finds and reads metadata of files in the the MEDIA_DIR directory. It will ignore
 all files with an extension that doesn't have a MIME type that is found in
@@ -314,14 +334,12 @@ func indexSongs() {
 
 			if f.IsDir() {
 				dirsToIndex = append(dirsToIndex, filePath)
-			} else {
-				if slices.Contains(supportedMediaTypes, fileType) {
-					newMediaFile, newAlbums, newArtists := types.NewMediaFile(filePath, albums, artists)
-					newMediaFiles = append(newMediaFiles, newMediaFile)
+			} else if slices.Contains(supportedMediaTypes, fileType) && !isSongIndexed(filePath) {
+				newMediaFile, newAlbums, newArtists := types.NewMediaFile(filePath, albums, artists)
+				newMediaFiles = append(newMediaFiles, newMediaFile)
 
-					albums = newAlbums
-					artists = newArtists
-				}
+				albums = newAlbums
+				artists = newArtists
 			}
 		}
 
@@ -331,5 +349,5 @@ func indexSongs() {
 	log.Println("[INDEX] Found", len(newMediaFiles), "songs,", len(albums), "albums, and", len(artists), "artists!")
 	updatingIndex = false
 
-	music = newMediaFiles
+	music = append(music, newMediaFiles...)
 }
