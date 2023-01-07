@@ -85,7 +85,7 @@ func main() {
 		Lists all music files
 	*/
 	v1api.Get("/songs", func(c *fiber.Ctx) error {
-		data := []types.BasicMediaFile{}
+		var data []types.BasicMediaFile
 
 		for i := 0; i < len(music); i++ {
 			data = append(data, types.BasicMediaFile{music[i].Id, music[i].Metadata.Title()})
@@ -166,7 +166,7 @@ func main() {
 		List all albums
 	*/
 	v1api.Get("/albums", func(c *fiber.Ctx) error {
-		data := []types.BasicAlbum{}
+		var data []types.BasicAlbum
 
 		for i := 0; i < len(albums); i++ {
 			data = append(data, types.BasicAlbum{albums[i].Id, albums[i].Title, albums[i].ArtistID})
@@ -245,7 +245,7 @@ func main() {
 		List all artists
 	*/
 	v1api.Get("/artists", func(c *fiber.Ctx) error {
-		data := []types.BasicArtist{}
+		var data []types.BasicArtist
 
 		for i := 0; i < len(artists); i++ {
 			data = append(data, types.BasicArtist{artists[i].Id, artists[i].Name})
