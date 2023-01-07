@@ -1,1 +1,10 @@
-cd ..; del .\build; .\build.bat; cd .\build\; mkdir data; copy ..\examples\* data;  .\harmony.exe
+@echo off
+
+mkdir build
+
+cd api
+go build -o ../build
+move ..\build\api.exe ..\build\harmony.exe
+cd ..
+
+npm run build
