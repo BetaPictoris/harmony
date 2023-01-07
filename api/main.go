@@ -37,7 +37,9 @@ func main() {
 	mediaDir = cfg.Section("library").Key("path").String()
 
 	// Update local song index in the background.
-	go indexSongs()
+	if cfg.Section("library").Key("scanOnStart").MustBool() {
+		go indexSongs()
+	}
 
 	app := fiber.New(fiber.Config{
 		ServerHeader:          "Harmony",
