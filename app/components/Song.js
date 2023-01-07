@@ -21,7 +21,22 @@ export default function Song(props) {
   // Play song
   function play() {
     // Set current song in sessionStorage
-    sessionStorage.setItem("currentSong", props.id);
+    let queue = sessionStorage.getItem("queue");
+    sessionStorage.setItem("queue", `${props.id},${queue}`);
+  }
+
+  function addToQueue() {
+    // Get current queue from sessionStorage
+    let queue = sessionStorage.getItem("queue");
+    // If queue is empty, set queue to current song
+    if (queue === null) {
+      queue = `${props.id}`;
+    } else {
+      // If queue is not empty, add current song to queue
+      queue += `,${props.id}`;
+    }
+    // Set queue in sessionStorage
+    sessionStorage.setItem("queue", queue);
   }
 
   // Render song data
@@ -29,6 +44,7 @@ export default function Song(props) {
     <div className="Song">
       {isLoaded ? (
         <>
+          <Button onClick={addToQueue}>+</Button>
           <span className="SongTitles">{song.Title}</span>
 
           <span className="SongPlayBttn">

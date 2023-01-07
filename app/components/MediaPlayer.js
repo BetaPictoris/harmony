@@ -11,15 +11,17 @@ export default function MediaPlayer(props) {
   React.useEffect(() => {
     // Create timer
     const timer = setInterval(() => {
+      let queue = sessionStorage.getItem("queue").split(",");
+
       // Check if currentSong has changed
-      if (sessionStorage.getItem("currentSong") !== currentPlaying) {
+      if (queue[0] !== currentPlaying) {
         // Update currentPlaying
-        setCurrentPlaying(sessionStorage.getItem("currentSong"));
+        setCurrentPlaying(queue[0]);
         document.querySelector("audio").play(); // Start playing
         setPlaying(true); // Set playing to true
 
         // Fetch song data from API
-        fetch(`/api/v1/songs/${sessionStorage.getItem("currentSong")}`)
+        fetch(`/api/v1/songs/${queue[0]}`)
           .then((response) => response.json())
           .then((data) => setSong(data));
 
@@ -48,6 +50,14 @@ export default function MediaPlayer(props) {
             document.querySelector("audio").pause();
           });
         }
+      }
+
+      // Check if song has ended
+      if (document.querySelector("audio").ended) {
+        // Remove current song from queue
+        queue.shift();
+        // Set queue in sessionStorage
+        sessionStorage.setItem("queue", queue.join(","));
       }
     }, 1000);
     // Clear timer on unmount
