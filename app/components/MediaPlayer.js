@@ -54,10 +54,7 @@ export default function MediaPlayer(props) {
 
       // Check if song has ended
       if (document.querySelector("audio").ended) {
-        // Remove current song from queue
-        queue.shift();
-        // Set queue in sessionStorage
-        sessionStorage.setItem("queue", queue.join(","));
+        nextSong();
       }
     }, 1000);
     // Clear timer on unmount
@@ -75,6 +72,42 @@ export default function MediaPlayer(props) {
       // Play
       document.querySelector("audio").play();
     }
+  }
+
+  // Next song
+  function nextSong() {
+    // Get queue from sessionStorage
+    let queue = sessionStorage.getItem("queue").split(",");
+
+    // Remove current song from queue
+    queue.shift();
+
+    // Set queue in sessionStorage
+    sessionStorage.setItem("queue", queue.join(","));
+
+    // Add to previous songs
+    if (sessionStorage.getItem("previousSongs") == null) {
+      sessionStorage.setItem("previousSongs", currentPlaying);
+    } else {
+      let previousSongs = sessionStorage.getItem("previousSongs").split(",");
+      previousSongs.push(currentPlaying);
+      sessionStorage.setItem("previousSongs", previousSongs.join(","));
+    }
+  }
+
+  // Previous song
+  function previousSong() {
+    // Get previous songs from sessionStorage
+    let previousSongs = sessionStorage.getItem("previousSongs").split(",");
+    let previousSong = previousSongs[previousSongs.length - 1];
+
+    // Remove previous song from previousSongs
+    previousSongs.pop();
+
+    // Add previousSong to the start of the queue
+    let queue = sessionStorage.getItem("queue").split(",");
+    queue.unshift(previousSong);
+    sessionStorage.setItem("queue", queue.join(","));
   }
 
   return (
@@ -95,6 +128,9 @@ export default function MediaPlayer(props) {
       </span>
 
       <span className="mediaPlayerControls">
+        <button onClick={previousSong} className="mediaPlayerControlsPrevBttn">
+          <img src="/app/assets/svg/player/previous.svg" alt="Previous" />
+        </button>
         <button onClick={togglePlaying} className="mediaPlayerControlsPlayBttn">
           <img
             src={
@@ -104,6 +140,9 @@ export default function MediaPlayer(props) {
             }
             alt="Play/Pause"
           />
+        </button>
+        <button onClick={nextSong} className="mediaPlayerControlsNextBttn">
+          <img src="/app/assets/svg/player/next.svg" alt="Next" />
         </button>
       </span>
     </div>

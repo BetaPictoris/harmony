@@ -13,6 +13,7 @@ $height: 8vh;
   .mediaPlayerInfo {
     display: flex;
     width: 40%;
+    margin-right: auto;
 
     .mediaPlayerInfoImg {
       height: calc($height - 2vh);
@@ -33,19 +34,18 @@ $height: 8vh;
   }
 
   .mediaPlayerControls {
-    width: 60%;
+    position: absolute;
+    top: 1vh;
+    left: 37.5%;
+
     display: flex;
-    justify-content: space-between;
     align-items: center;
+
+    margin-right: 40%;
 
     .mediaPlayerControlsPlayBttn {
       height: calc($height - 2vh);
       width: calc($height - 2vh);
-      margin: 1vh;
-      border: none;
-      border-radius: 8px;
-      background-color: $accentColor;
-      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
