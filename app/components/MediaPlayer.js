@@ -111,40 +111,51 @@ export default function MediaPlayer(props) {
   }
 
   return (
-    <div className="mediaPlayer">
-      <audio autoPlay={playing} src={`/api/v1/songs/${currentPlaying}/audio`} />
+    <>
+      <div className="mediaPlayer">
+        <audio
+          autoPlay={playing}
+          src={`/api/v1/songs/${currentPlaying}/audio`}
+        />
 
-      <span className="mediaPlayerInfo">
-        {song.Id && (
-          <img
-            className="mediaPlayerInfoImg"
-            src={`/api/v1/songs/${song.Id}/cover`}
-            alt="Album Art"
-          />
-        )}
-        <span className="mediaPlayerInfoTitle">
-          {song.Title ? song.Title : "Not playing..."}
+        <span className="mediaPlayerInfo">
+          {song.Id && (
+            <img
+              className="mediaPlayerInfoImg"
+              src={`/api/v1/songs/${song.Id}/cover`}
+              alt="Album Art"
+            />
+          )}
+          <span className="mediaPlayerInfoTitle">
+            {song.Title ? song.Title : "Not playing..."}
+          </span>
         </span>
-      </span>
 
-      <span className="mediaPlayerControls">
-        <button onClick={previousSong} className="mediaPlayerControlsPrevBttn">
-          <img src="/app/assets/svg/player/previous.svg" alt="Previous" />
-        </button>
-        <button onClick={togglePlaying} className="mediaPlayerControlsPlayBttn">
-          <img
-            src={
-              playing
-                ? "/app/assets/svg/player/pause.svg"
-                : "/app/assets/svg/player/play.svg"
-            }
-            alt={playing ? "Pause" : "Play"}
-          />
-        </button>
-        <button onClick={nextSong} className="mediaPlayerControlsNextBttn">
-          <img src="/app/assets/svg/player/next.svg" alt="Next" />
-        </button>
-      </span>
-    </div>
+        <span className="mediaPlayerControls">
+          <button
+            onClick={previousSong}
+            className="mediaPlayerControlsPrevBttn"
+          >
+            <img src="/app/assets/svg/player/previous.svg" alt="Previous" />
+          </button>
+          <button
+            onClick={togglePlaying}
+            className="mediaPlayerControlsPlayBttn"
+          >
+            <img
+              src={
+                playing
+                  ? "/app/assets/svg/player/pause.svg"
+                  : "/app/assets/svg/player/play.svg"
+              }
+              alt={playing ? "Pause" : "Play"}
+            />
+          </button>
+          <button onClick={nextSong} className="mediaPlayerControlsNextBttn">
+            <img src="/app/assets/svg/player/next.svg" alt="Next" />
+          </button>
+        </span>
+      </div>
+    </>
   );
 }
