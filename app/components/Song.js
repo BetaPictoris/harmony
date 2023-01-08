@@ -44,10 +44,13 @@ export default function Song(props) {
     <div className="Song">
       {isLoaded ? (
         <>
-          <Button onClick={addToQueue}>+</Button>
+          <span className="SongBttn">
+            <Button onClick={addToQueue}>+</Button>
+          </span>
+
           <span className="SongTitles">{song.Title}</span>
 
-          <span className="SongPlayBttn">
+          <span className="SongPlayBttn SongBttn">
             <Button onClick={play}>Play</Button>
           </span>
         </>
