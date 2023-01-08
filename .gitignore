@@ -22,3 +22,12 @@ yarn-error.log*
 
 # Sample audio
 /audio
+
+# Editors 
+## IDEA
+.idea
+/shelf/
+/workspace.xml
+/httpRequests/
+/dataSources/
+/dataSources.local.xml
