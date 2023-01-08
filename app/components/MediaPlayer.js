@@ -138,7 +138,7 @@ export default function MediaPlayer(props) {
                 ? "/app/assets/svg/player/pause.svg"
                 : "/app/assets/svg/player/play.svg"
             }
-            alt="Play/Pause"
+            alt={playing ? "Pause" : "Play"}
           />
         </button>
         <button onClick={nextSong} className="mediaPlayerControlsNextBttn">
