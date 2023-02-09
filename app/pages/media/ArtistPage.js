@@ -22,7 +22,7 @@ export default function ArtistPage(props) {
   });
 
   function updateAlbums() {
-    artist.AlbumIDs.forEach(function (aID, i) {
+    artist.AlbumIDs.forEach(function (aID, _) {
       fetch(`/api/v1/albums/${aID}`)
         .then((response) => response.json())
         .then((data) => {

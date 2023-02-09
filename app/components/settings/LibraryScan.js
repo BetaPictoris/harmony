@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../Button";
 
-export default function LibraryScan(props) {
+export default function LibraryScan() {
   const [checkScanning, setCheckScanning] = React.useState(false); // If true check `isScanning` every 1 second
   const [isScanning, setIsScanning] = React.useState(false); // If true library is currently being scanned
   const [doneScanning, setDoneScanning] = React.useState(false); // If true library has finished scanning
