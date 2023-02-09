@@ -31,7 +31,7 @@ export default function ArtistPage(props) {
     });
   }
 
-  return (
+  return isLoaded && (
     <div className="artistPage page">
       <div className="artistDetails">
         <h1 className="artistDetailsName">{artist.Name}</h1>

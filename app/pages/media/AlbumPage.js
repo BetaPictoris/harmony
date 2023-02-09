@@ -30,7 +30,7 @@ export default function AlbumPage(props) {
   }
 
   // Render album data
-  return (
+  return isLoaded && (
     <div className="albumPage page">
       <div className="albumPageDetails">
         <img
