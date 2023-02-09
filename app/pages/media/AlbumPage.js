@@ -30,34 +30,36 @@ export default function AlbumPage(props) {
   }
 
   // Render album data
-  return isLoaded && (
-    <div className="albumPage page">
-      <div className="albumPageDetails">
-        <img
-          className="albumPageImg"
-          src={`/api/v1/albums/${album.Id}/cover`}
-          alt="Album cover"
-        />
-        <div className="albumPageInfo">
-          <h1 className="albumPageHeader">{album.Title}</h1>
-          <a className="albumPageLink" href={`#artists/${album.ArtistID}`}>
-            {album.ArtistName}
-          </a>
-          <Button onClick={play} className="albumPageButton">
-            Play
-          </Button>
+  return (
+    isLoaded && (
+      <div className="albumPage page">
+        <div className="albumPageDetails">
+          <img
+            className="albumPageImg"
+            src={`/api/v1/albums/${album.Id}/cover`}
+            alt="Album cover"
+          />
+          <div className="albumPageInfo">
+            <h1 className="albumPageHeader">{album.Title}</h1>
+            <a className="albumPageLink" href={`#artists/${album.ArtistID}`}>
+              {album.ArtistName}
+            </a>
+            <Button onClick={play} className="albumPageButton">
+              Play
+            </Button>
+          </div>
+        </div>
+
+        <div className="songs">
+          {songs.map((song) => {
+            return (
+              <div className="SongCont">
+                <Song key={song} id={song} />
+              </div>
+            );
+          })}
         </div>
       </div>
-
-      <div className="songs">
-        {songs.map((song) => {
-          return (
-            <div className="SongCont">
-              <Song key={song} id={song} />
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    )
   );
 }
