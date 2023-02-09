@@ -31,20 +31,22 @@ export default function ArtistPage(props) {
     });
   }
 
-  return isLoaded && (
-    <div className="artistPage page">
-      <div className="artistDetails">
-        <h1 className="artistDetailsName">{artist.Name}</h1>
+  return (
+    isLoaded && (
+      <div className="artistPage page">
+        <div className="artistDetails">
+          <h1 className="artistDetailsName">{artist.Name}</h1>
+        </div>
+        <div className="artistAlbums">
+          <Section title="Albums">
+            <div className="artistAlbumsGrid">
+              {albums.map((album) => (
+                <Album key={album.Id} id={album.Id} title={album.Title} />
+              ))}
+            </div>
+          </Section>
+        </div>
       </div>
-      <div className="artistAlbums">
-        <Section title="Albums">
-          <div className="artistAlbumsGrid">
-            {albums.map((album) => (
-              <Album key={album.Id} id={album.Id} title={album.Title} />
-            ))}
-          </div>
-        </Section>
-      </div>
-    </div>
+    )
   );
 }
