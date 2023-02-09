@@ -86,7 +86,7 @@ export default function MediaPlayer(props) {
     sessionStorage.setItem("queue", queue.join(","));
 
     // Add to previous songs
-    if (sessionStorage.getItem("previousSongs") == null) {
+    if (sessionStorage.getItem("previousSongs") === null) {
       sessionStorage.setItem("previousSongs", currentPlaying);
     } else {
       let previousSongs = sessionStorage.getItem("previousSongs").split(",");
